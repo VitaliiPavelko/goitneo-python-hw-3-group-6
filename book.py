@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from fields import Record
 
 class AddressBook():
-    filepath = "./book.bin"
+    __FILEPATH = "./book.bin"
 
     __CONGRATULATION_WEEKDAYS = [
         'Monday',
@@ -54,8 +54,12 @@ class AddressBook():
 
     def __init__(self):
         self.data = {}
-        self.fh = open("./book.bin", "r+b")
-        self.load_storage()
+
+        try:
+            self.fh = open(AddressBook.__FILEPATH, "r+b")
+            self.load_storage()
+        except FileNotFoundError:
+            self.fh = open(AddressBook.__FILEPATH, 'w+b')
 
     def is_empty(self):
         return len(self.data) == 0

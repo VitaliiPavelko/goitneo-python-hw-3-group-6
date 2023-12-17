@@ -30,6 +30,24 @@ def add_birthday(args, book: AddressBook):
 
     return "Birthday added."
 
+@return_err_message
+def show_birthdays(book: AddressBook):
+    if book.is_empty():
+        return "No contacts added."
+
+    birthdays = book.get_birthdays_per_week()
+
+    if not birthdays:
+        return "No birthdays this week."
+
+    result = ""
+
+    for weekday, contacts in birthdays.items():
+        people = "\n".join(F"- {contact}" for contact in contacts)
+        result += f"{weekday}:\n{people}\n"
+
+    return result
+
 
 @return_err_message
 @validate_args_array("<username>")
@@ -116,6 +134,8 @@ def main():
             output = add_birthday(args, book)
         elif command == "show_birthday":
             output = show_birthday(args, book)
+        elif command == "birthdays":
+            output = show_birthdays(book)
         elif command == "phone":
             output = show_phone(args, book)
         elif command == "all":

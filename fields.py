@@ -22,8 +22,8 @@ class Name(Field):
 class Phone(Field):
     @map_err_message(ValueError, "Invalid phone format. Expected: 10 digits")
     def __init__(self, value):
-        # if match(r"^\d{10}$", value) is None:
-            # raise ValueError()
+        if match(r"^\d{10}$", value) is None:
+            raise ValueError()
 
         super().__init__(value)
 

@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 from book import AddressBook
 from common import return_err_message, parse_input, validate_args_array
 from fields import Record

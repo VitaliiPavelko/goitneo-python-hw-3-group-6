@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 from re import findall
 
 def map_err_message(err, message):

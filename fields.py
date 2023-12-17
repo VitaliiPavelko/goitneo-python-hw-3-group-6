@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 from datetime import datetime
 from re import match
 from common import map_err_message

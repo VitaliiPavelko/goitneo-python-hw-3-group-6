@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 import pickle
 
 from fields import Record
@@ -35,7 +37,7 @@ class AddressBook():
         name = record.name.value
         self.data[name] = record
 
-    
+
     def iterate(self):
         for record in self.data.values():
             yield record

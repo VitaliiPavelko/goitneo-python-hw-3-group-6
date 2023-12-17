@@ -5,11 +5,7 @@ from re import match
 from common import map_err_message
 
 class Field:
-    @map_err_message(TypeError, "Value must be a string")
     def __init__(self, value):
-        if type(value) != str:
-            raise TypeError()
-
         self.value = value
 
     def __str__(self):
@@ -35,7 +31,10 @@ class Birthday(Field):
     @map_err_message(ValueError, "Invalid birthday format. Expected: DD.MM.YYYY")
     def __init__(self, value):
         value = datetime.strptime(value, "%d.%m.%Y")
-        super().__init__(value)
+        super().__init__(value.date())
+
+    def __str__(self):
+        return self.value.strftime("%d.%m.%Y")
 
 class Record:
     def __init__(self, name):
@@ -49,11 +48,20 @@ class Record:
     def __str__(self):
         name = self.name.value
         phones = self.phones_str()
+        birthday_str = ''
 
-        return f"name: {name}\nphones:\n{phones}"
+        if self.birthday:
+            birthday = str(self.birthday)
+            birthday_str = f"birthday: {birthday}\n"
+
+
+        return f"name: {name}\n{birthday_str}phones:\n{phones}"
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
+
+    def add_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
 
     def find_phone(self, phone):
         for p in self.phones:

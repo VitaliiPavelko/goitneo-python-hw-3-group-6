@@ -16,6 +16,34 @@ def add_contact(args, book: AddressBook):
 
     return "Contact added."
 
+@return_err_message
+@validate_args_array("<username> <birthday DD.MM.YYYY>")
+def add_birthday(args, book: AddressBook):
+    name, birthday = args
+    record: Record = book.find(name)
+
+    if record is None:
+        raise KeyError(f"Contact {name} not found.")
+
+    record.add_birthday(birthday)
+    book.sync_storage()
+
+    return "Birthday added."
+
+
+@return_err_message
+@validate_args_array("<username>")
+def show_birthday(args, book: AddressBook):
+    name, = args
+    record = book.find(name)
+
+    if not record:
+        raise KeyError("Contact does not exist")
+
+    if not record.birthday:
+        return "Contact has no birthday"
+
+    return str(record.birthday)
 
 @return_err_message
 @validate_args_array("<username> <old phone> <new phone>")
@@ -84,6 +112,10 @@ def main():
             output = add_phone(args, book)
         elif command == "change":
             output = change_contact(args, book)
+        elif command == "add-birthday":
+            output = add_birthday(args, book)
+        elif command == "show_birthday":
+            output = show_birthday(args, book)
         elif command == "phone":
             output = show_phone(args, book)
         elif command == "all":

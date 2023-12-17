@@ -132,7 +132,7 @@ def main():
             output = change_contact(args, book)
         elif command == "add-birthday":
             output = add_birthday(args, book)
-        elif command == "show_birthday":
+        elif command == "show-birthday":
             output = show_birthday(args, book)
         elif command == "birthdays":
             output = show_birthdays(book)

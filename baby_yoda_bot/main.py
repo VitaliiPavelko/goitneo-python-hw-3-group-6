@@ -2,7 +2,8 @@ from .exceptions import UnexpectedException, ValidationValueException
 from .commands import EXIT_COMMANDS
 from .commands import commands_handler
 from .constants import TEXT
-from .utils import start_work, stop_work
+from .utils import start_work, stop_work, parse_input, request_input
+
 
 
 def yoda_say():
@@ -17,8 +18,10 @@ def yoda_say():
         try:
             # TODO user_input = call a function to get user input
             # TODO command, args = call a function to parse user_input
-            cmd = input(">>> ")
-            command, args = (cmd, [])
+            # TODO add input command message
+
+            cmd = request_input()
+            command, args = parse_input(cmd)
 
             if command:
                 commands_handler(command, book, args)
